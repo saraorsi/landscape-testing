@@ -7,20 +7,17 @@ const config = new Configuration({
 const openai = new OpenAIApi(config);
 
 export async function generateSpeculation(input: string) {
-  console.log(input);
-  console.log("generating");
   try {
     const response = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages: [
         {
           role: "system",
-          content:
-            "I am an AI that speculative on a future with and philosophical tone",
+          content: "I am an AI that speculate with and philosophical tone",
         },
         {
           role: "user",
-          content: `Make a speculation having as a starting point: ##${input}##. Don't start in the same way. The speculation should be in a single sentence with no more than 20 words: ##${input}##`,
+          content: `Make a speculation having as a starting point: ##${input}##. Don't start in the same way. The speculation should be in a single sentence with no more than 20 words.`,
         },
       ],
     });
@@ -35,7 +32,7 @@ export async function generateSpeculation(input: string) {
 export async function generateLandscape(specutation: string) {
   try {
     const response = await openai.createImage({
-      prompt: specutation,
+      prompt: `generate an image that ilustrates the following text: ##${specutation}##.`,
       n: 1,
       size: "256x256",
     });

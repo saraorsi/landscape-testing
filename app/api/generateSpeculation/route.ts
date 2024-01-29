@@ -11,6 +11,6 @@ export async function POST(req: NextRequest) {
     return new NextResponse(response);
   } catch (error) {
     console.log(error);
-    return new NextResponse("erro");
+    return new NextResponse("error");
   }
 }

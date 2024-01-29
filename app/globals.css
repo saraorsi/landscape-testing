@@ -6,19 +6,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  color: #00ff00;
 }
-
-.state {
-  position: fixed;
-  top: 1vw;
-  left: 1vw;
-  font-size: 1vw;
-  font-family: "Courier New", Courier, monospace;
-  text-shadow: 0 0 0.2vw #000000;
-  z-index: 1000;
+.flicker {
   animation: flicker 2s infinite;
 }
-
 @keyframes flicker {
   0% {
     opacity: 0.3;
@@ -28,27 +20,32 @@
   }
 }
 
-.background {
-  position: fixed;
-  top: -10%;
-  width: 1000%;
-  height: 100vh;
+.fade-in {
+  animation: bounce 15s alternate infinite, fadeIn 10s forwards;
 }
 
-img {
-  opacity: 1;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.bounce-frame {
   animation: bounce 15s alternate infinite;
 }
 
 @keyframes bounce {
   0% {
-    width: 1000%;
-    height: 120%;
+    min-width: 1000%;
+    height: 120vh;
     transform: translateY(-20px) translateX(0px);
   }
   100% {
-    width: 1100%;
-    height: 125%;
+    min-width: 1200%;
+    height: 125vh;
     transform: translateY(-20px) translateX(-100px);
   }
 }
