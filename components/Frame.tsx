@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type FrameProps = {
   initialInput: string;
@@ -11,7 +11,7 @@ export default function Frame({ initialInput }: FrameProps) {
   const [landscapes, setLandscapes] = useState<Array<string>>([]);
   const [reading, setReading] = useState(false);
   const [state, setState] = useState("");
-  const [count, setCount] = useState(0);
+  let count = 0;
 
   async function fetchSpectulation(input: string) {
     setState("generating speculation");
@@ -36,42 +36,48 @@ export default function Frame({ initialInput }: FrameProps) {
     }
   }
 
-  function speakDescription(speculation: string) {
+  async function speakDescription(speculation: string): Promise<void> {
     const synth = window.speechSynthesis;
-    if ("speechSynthesis" in window) {
+    await new Promise<void>((resolve) => {
+      const voices = synth.getVoices();
+      if (voices.length > 0) {
+        resolve();
+      } else if (synth.onvoiceschanged !== undefined) {
+        synth.onvoiceschanged = () => resolve();
+      } else {
+        resolve(); // Resolve immediately if voices are not dynamically loaded
+      }
+    });
+
+    const voices = synth.getVoices();
+
+    const utterance = new SpeechSynthesisUtterance(speculation);
+    utterance.voice = voices[132];
+
+    utterance.rate = 0.8;
+    utterance.pitch = 1;
+
+    utterance.onstart = () => {
+      setInput(speculation);
+      setState("");
+      setReading(true);
+    };
+
+    utterance.onend = () => {
       synth.cancel();
-      // const voices = synth.getVoices();
-      //const selectedVoice = voices[10];
-      const utterance = new SpeechSynthesisUtterance(speculation);
-      utterance.rate = 0.8;
-      utterance.pitch = 1;
-      //utterance.voice = selectedVoice;
-
-      utterance.onstart = () => {
-        setInput(speculation);
-        setState("");
-        setReading(true);
-      };
-
-      utterance.onend = () => {
-        setReading(false);
-        if (count === 10) {
-          // Do something after 10 readings
-        } else {
-          // Increment the count or handle as needed
-          setCount(count + 1);
-          // Fetch the next speculation
-          fetchSpectulation(speculation);
-        }
-      };
-      synth.speak(utterance);
-    } else {
-      console.log("Your browser does not support speech synthesis.");
-    }
+      setReading(false);
+      console.log(count);
+      if (count == 10) {
+        window.location.reload();
+      } else {
+        count++;
+        fetchSpectulation(speculation);
+      }
+    };
+    synth.speak(utterance);
   }
 
   useEffect(() => {
-    //new Promise((resolve) => setTimeout(resolve, 2000));
     fetchSpectulation(initialInput);
   }, []);
 
@@ -97,7 +103,7 @@ export default function Frame({ initialInput }: FrameProps) {
             </figure>
           </div>
         ))}
-      <div className="fixed bottom-10 text-center px-64 text-xl">
+      <div className="fixed bottom-10 text-center px-64 text-xl drop-shadow-md">
         {reading && input}
       </div>
     </>

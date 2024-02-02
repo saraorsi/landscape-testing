@@ -17,7 +17,7 @@ export async function generateSpeculation(input: string) {
         },
         {
           role: "user",
-          content: `Make a speculation having as a starting point: ##${input}##. Don't start in the same way. The speculation should be in a single sentence with no more than 20 words.`,
+          content: `Craft a maximum 20-word sentence extending the concept initiated by ##${input}##, forming a speculative continuation of the idea.`,
         },
       ],
     });
@@ -29,10 +29,10 @@ export async function generateSpeculation(input: string) {
   }
 }
 
-export async function generateLandscape(specutation: string) {
+export async function generateLandscape(speculation: string) {
   try {
     const response = await openai.createImage({
-      prompt: `generate an image that ilustrates the following text: ##${specutation}##.`,
+      prompt: `Generate a text-free image illustrating the content of ##${speculation}##.`,
       n: 1,
       size: "256x256",
     });
