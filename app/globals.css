@@ -6,8 +6,17 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: #00ff00;
+  letter-spacing: 0.1em;
+  word-spacing: 0.4em;
+  font-family: sans-serif;
 }
+
+body {
+  color: #00ff00;
+  text-align: justify;
+  text-align-last: center;
+}
+
 .flicker {
   animation: flicker 2s infinite;
 }
@@ -23,7 +32,6 @@
 .fade-in {
   animation: bounce 15s alternate infinite, fadeIn 10s forwards;
 }
-
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -36,7 +44,6 @@
 .bounce-frame {
   animation: bounce 15s alternate infinite;
 }
-
 @keyframes bounce {
   0% {
     min-width: 1000%;

@@ -1,6 +1,5 @@
 "use client";
-import Frame from "@/components/Frame";
-import InicialFrame from "@/components/InicialFrame";
+import Frame from "@/components/Frames";
 import { useRef, useState } from "react";
 
 export default function Home() {
@@ -26,16 +25,29 @@ export default function Home() {
   return (
     <>
       {!start && (
-        <div className="w-full h-screen flex items-center justify-center">
+        <div className="w-[900px] h-screen flex flex-col items-center justify-center m-auto text-justify-center text-last-center">
+          <div className="text-lg mb-8 uppercase">
+            Symbiotic Landscape Generator 2.0
+          </div>
+          <div className="text-lg mb-8">{input}</div>
+          <div className="text-sm mb-4">
+            [residency synopsis]
+            <br />
+            CADA
+          </div>
+          <div className="text-sm mb-12">
+            [sound]
+            <br />
+            valt​​​Ü​​​ü​​​d by Catarina Arbusto
+          </div>
           <button
             onClick={playAudio}
-            className="bg-slate-100 py-3 px-5 text-slate-900"
+            className="text-lg flicker bg-transparent py-2 px-8 text-green rounded-3xl border-solid border-2 border-[#00ff00]"
           >
-            Start Performance
+            start the performance
           </button>
         </div>
       )}
-      {start && <InicialFrame input={input} />}
       {startFrames && <Frame initialInput={input} />}
       <audio ref={audioRef} style={{ display: "none" }}>
         <source src="./3626487201.mp3" type="audio/mp3" />

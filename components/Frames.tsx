@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 type FrameProps = {
   initialInput: string;
@@ -29,6 +29,7 @@ export default function Frame({ initialInput }: FrameProps) {
         speculation,
       });
       const landscape = await response.data;
+      setState("");
       setLandscapes((prev: Array<string>) => [...prev, landscape]);
       setTimeout(() => speakDescription(speculation), 3000);
     } catch (error) {
@@ -45,7 +46,7 @@ export default function Frame({ initialInput }: FrameProps) {
       } else if (synth.onvoiceschanged !== undefined) {
         synth.onvoiceschanged = () => resolve();
       } else {
-        resolve(); // Resolve immediately if voices are not dynamically loaded
+        resolve();
       }
     });
 
@@ -53,8 +54,7 @@ export default function Frame({ initialInput }: FrameProps) {
 
     const utterance = new SpeechSynthesisUtterance(speculation);
     utterance.voice = voices[132];
-
-    utterance.rate = 0.8;
+    utterance.rate = 0.9;
     utterance.pitch = 1;
 
     utterance.onstart = () => {
@@ -84,7 +84,7 @@ export default function Frame({ initialInput }: FrameProps) {
   return (
     <>
       {state && (
-        <div className="fixed top-5 left-5 flicker z-20 text-sm font-mono">
+        <div className="fixed top-5 left-5 flicker z-20 text-xs font-mono">
           [{state}]
         </div>
       )}
@@ -103,7 +103,7 @@ export default function Frame({ initialInput }: FrameProps) {
             </figure>
           </div>
         ))}
-      <div className="fixed bottom-10 text-center px-64 text-xl drop-shadow-md">
+      <div className="fixed bottom-10 text-center px-64 text-xl drop-shadow-[0_0_1px_rgba(0,0,0,0.5)]">
         {reading && input}
       </div>
     </>

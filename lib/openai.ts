@@ -17,7 +17,7 @@ export async function generateSpeculation(input: string) {
         },
         {
           role: "user",
-          content: `Craft a maximum 20-word sentence extending the concept initiated by ##${input}##, forming a speculative continuation of the idea.`,
+          content: `Craft a maximum 20-word sentence extending: "##${input}##", forming a speculative continuation of the idea.`,
         },
       ],
     });
