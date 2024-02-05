@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 
 export default function Home() {
   const input =
-    "Although the modern Western view of the world is based on their division, nature and culture are interconnected. Culture is a complex and dynamic process of interaction and coevolution between human beings and other species, as well as between technologies and environments. Thus, as is evident with climate change, technology and nature are historically intertwined and must be understood as part of the ecological niche in which the human animal lives.";
+    "Although the modern Western worldview is built on their division, nature and culture are interconnected. Culture is a complex and dynamic process of interaction and co-evolution between humans and other species, as well as technologies and environments. Thus, as seen with climate change, technology and nature are historically interconnected and should be viewed as part of the ecological niche within which the human animal lives.";
   const [start, setStart] = useState(false);
   const [startFrames, setStartFrames] = useState(false);
 
@@ -27,11 +27,11 @@ export default function Home() {
       {!start && (
         <div className="w-[900px] h-screen flex flex-col items-center justify-center m-auto text-justify-center text-last-center">
           <div className="text-lg mb-8 uppercase">
-            Symbiotic Landscape Generator 2.0
+            Symbiotic Landscape Generator
           </div>
           <div className="text-lg mb-8">{input}</div>
           <div className="text-sm mb-4">
-            [residency synopsis]
+            [excerpt from residency synopsis used as initial input]
             <br />
             CADA
           </div>

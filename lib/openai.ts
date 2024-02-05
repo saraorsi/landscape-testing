@@ -13,11 +13,11 @@ export async function generateSpeculation(input: string) {
       messages: [
         {
           role: "system",
-          content: "I am an AI that speculate with and philosophical tone",
+          content: "I am an AI that speculates with a philosophical tone",
         },
         {
           role: "user",
-          content: `Craft a maximum 20-word sentence extending: "##${input}##", forming a speculative continuation of the idea.`,
+          content: `Craft a maximum 20-word sentene forming speculative continuation of: ##${input}##".`,
         },
       ],
     });
@@ -32,7 +32,7 @@ export async function generateSpeculation(input: string) {
 export async function generateLandscape(speculation: string) {
   try {
     const response = await openai.createImage({
-      prompt: `Generate a text-free image illustrating the content of ##${speculation}##.`,
+      prompt: `Create an image that, without any text visible, visually represents ##${speculation}##.`,
       n: 1,
       size: "256x256",
     });

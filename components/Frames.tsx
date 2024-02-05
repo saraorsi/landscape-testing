@@ -11,7 +11,8 @@ export default function Frame({ initialInput }: FrameProps) {
   const [landscapes, setLandscapes] = useState<Array<string>>([]);
   const [reading, setReading] = useState(false);
   const [state, setState] = useState("");
-  let count = 0;
+  const [end, setEnd] = useState(false);
+  let count = 1;
 
   async function fetchSpectulation(input: string) {
     setState("generating speculation");
@@ -68,7 +69,8 @@ export default function Frame({ initialInput }: FrameProps) {
       setReading(false);
       console.log(count);
       if (count == 10) {
-        window.location.reload();
+        setEnd(true);
+        setTimeout(() => window.location.reload(), 3000);
       } else {
         count++;
         fetchSpectulation(speculation);
@@ -82,9 +84,9 @@ export default function Frame({ initialInput }: FrameProps) {
   }, []);
 
   return (
-    <>
+    <div className={`${end ? "fade-out" : ""}`}>
       {state && (
-        <div className="fixed top-5 left-5 flicker z-20 text-xs font-mono">
+        <div className="fixed top-5 left-5 flicker z-20 text-xs font-mono drop-shadow-[0_0_1px_rgba(0,0,0,0.5)">
           [{state}]
         </div>
       )}
@@ -106,6 +108,6 @@ export default function Frame({ initialInput }: FrameProps) {
       <div className="fixed bottom-10 text-center px-64 text-xl drop-shadow-[0_0_1px_rgba(0,0,0,0.5)]">
         {reading && input}
       </div>
-    </>
+    </div>
   );
 }
